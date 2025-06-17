@@ -46,7 +46,7 @@ where
                 justify_content: JustifyContent::Center,
                 ..default()
             },
-            BorderRadius::MAX,
+            BorderRadius::all(Val::Percent(10.)),
         ),
     )
 }
