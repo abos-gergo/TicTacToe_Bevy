@@ -6,6 +6,6 @@ edition = "2024"
 [dependencies]
 bevy = "0.16.1"
 bevy_quinnet = "0.17.0"
+bevy-inspector-egui = "0.31.0"
 rand = "0.9.1"
 shared = { path = "../shared" }
-tokio = "1.45.1"

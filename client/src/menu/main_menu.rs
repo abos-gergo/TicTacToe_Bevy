@@ -1,26 +1,32 @@
 use bevy::prelude::*;
 
 use crate::{
-    menu::Menu,
-    screens::Screen,
-    theme::{button, ui_root},
+    menu::MenuState,
+    theme::{button, ui_root}, ScreenState,
 };
 
-pub(super) fn plugin(app: &mut App) {
-    app.add_systems(OnEnter(Menu::Main), spawn_main);
+pub(super) struct MainMenuPlugin;
+impl Plugin for MainMenuPlugin {
+    fn build(&self, app: &mut App) {
+        app.add_systems(OnEnter(MenuState::Main), spawn_main_menu);
+    }
 }
 
-pub fn spawn_main(mut commands: Commands) {
+fn spawn_main_menu(mut commands: Commands) {
     commands.spawn((
         ui_root("Main Menu"),
         GlobalZIndex(2),
-        StateScoped(Menu::Main),
-        children![button("Find Match", find_match), button("Exit", exit_app)],
+        StateScoped(MenuState::Main),
+        children![button("Find Match", find_match), button("Settings", enter_settings_menu), button("Exit", exit_app)],
     ));
 }
 
-pub fn find_match(_: Trigger<Pointer<Click>>, mut next_screen: ResMut<NextState<Screen>>) {
-    next_screen.set(Screen::Gameplay);
+fn find_match(_: Trigger<Pointer<Click>>, mut screen_state: ResMut<NextState<ScreenState>>) {
+    screen_state.set(ScreenState::Game);
+}
+
+fn enter_settings_menu(_: Trigger<Pointer<Click>>, mut menu_state: ResMut<NextState<MenuState>>) {
+    menu_state.set(MenuState::Settings)
 }
 
 fn exit_app(_: Trigger<Pointer<Click>>, mut app_exit: EventWriter<AppExit>) {

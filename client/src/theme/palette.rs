@@ -30,6 +30,10 @@ fn apply_interaction_palette(
         .into();
     }
 }
-pub fn plugin(app: &mut App) {
-    app.add_systems(Update, apply_interaction_palette);
+
+pub struct UIThemePlugin;
+impl Plugin for UIThemePlugin {
+    fn build(&self, app: &mut App) {
+        app.add_systems(Update, apply_interaction_palette);
+    }
 }
