@@ -11,6 +11,10 @@ impl Plugin for GamePlugin {
 
 fn spawn_board(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn(Sprite::from_image(asset_server.load("board.png")));
+    commands.spawn((
+        Sprite::from_image(asset_server.load("x.png")),
+        Transform::from_translation(Vec3::new(BOARD_SPACING, 0., 0.)),
+    ));
 }
 
 #[derive(States, Copy, Clone, Eq, PartialEq, Hash, Debug, Default)]
@@ -31,6 +35,10 @@ enum Tile {
     Player,
     Opponent,
 }
+
+//Space between tiles in px.
+//Use -BOARD_SPACING for left column, 0 for middle and +BOARD_SPACING for the right column.
+const BOARD_SPACING: f32 = 170.;
 
 #[derive(Resource, Default)]
 struct Board {
