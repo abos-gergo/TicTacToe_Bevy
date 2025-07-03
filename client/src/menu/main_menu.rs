@@ -26,7 +26,7 @@ fn find_match(_: Trigger<Pointer<Click>>, mut screen_state: ResMut<NextState<Scr
 }
 
 fn enter_settings_menu(_: Trigger<Pointer<Click>>, mut menu_state: ResMut<NextState<MenuState>>) {
-    menu_state.set(MenuState::Settings)
+    menu_state.set(MenuState::Settings);
 }
 
 fn exit_app(_: Trigger<Pointer<Click>>, mut app_exit: EventWriter<AppExit>) {

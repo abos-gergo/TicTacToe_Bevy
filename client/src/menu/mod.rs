@@ -1,8 +1,12 @@
-use bevy::{
-    app::{App, Plugin}, ecs::system::{ResMut}, state::{app::AppExtStates, state::{NextState, OnEnter, OnExit, States}}
+use crate::{
+    ScreenState, User,
+    menu::{
+        enter_name::EnterNameMenuPlugin, main_menu::MainMenuPlugin, settings::SettingsMenuPlugin,
+    },
 };
-use crate::{menu::{main_menu::MainMenuPlugin, settings::SettingsMenuPlugin}, ScreenState};
+use bevy::prelude::*;
 
+mod enter_name;
 mod main_menu;
 mod settings;
 
@@ -14,6 +18,7 @@ impl Plugin for MenuPlugin {
         app.init_state::<MenuState>();
         app.add_plugins(MainMenuPlugin);
         app.add_plugins(SettingsMenuPlugin);
+        app.add_plugins(EnterNameMenuPlugin);
     }
 }
 
@@ -24,10 +29,16 @@ pub enum MenuState {
     None,
     Main,
     Settings,
+    EnterName,
 }
 
-fn on_enter_menu(mut menu_state: ResMut<NextState<MenuState>>) {
-    menu_state.set(MenuState::Main);
+fn on_enter_menu(mut menu_state: ResMut<NextState<MenuState>>, user: Res<User>) {
+    info!(user.name);
+    if user.name.is_some() {
+        menu_state.set(MenuState::Main);
+    } else {
+        menu_state.set(MenuState::EnterName);
+    }
 }
 
 fn on_exit_menu(mut menu_state: ResMut<NextState<MenuState>>) {

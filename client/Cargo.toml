@@ -9,3 +9,5 @@ bevy_quinnet = "0.17.0"
 bevy-inspector-egui = "0.31.0"
 rand = "0.9.1"
 shared = { path = "../shared" }
+bevy_pkv = "0.13.0"
+serde = "*"
